@@ -1,7 +1,7 @@
 
 # Web Application Design Document
 
-**Stack**: Ruby on Rails (API mode) · MySQL · React · Vite · TypeScript · React Query · TailwindCSS 
+**Stack**: Ruby on Rails (API mode) · MySQL · React · Vite · TypeScript · React Query · TailwindCSS · Shadcn
 
 ---
 

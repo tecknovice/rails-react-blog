@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { Button } from '@/components/ui/button';
 
 interface DefaultLayoutProps {
   children: ReactNode;
@@ -18,38 +19,35 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header className="bg-white shadow-sm">
+      <header className="bg-background border-b">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-8">
-            <Link to="/" className="text-xl font-bold text-gray-800">Blog App</Link>
+            <Link to="/" className="text-xl font-bold">Blog App</Link>
             <nav className="flex gap-4">
-              <Link to="/" className="text-gray-600 hover:text-gray-900">Home</Link>
+              <Link to="/" className="text-muted-foreground hover:text-foreground">Home</Link>
             </nav>
           </div>
           <div className="flex items-center gap-4">
             {isAuthenticated ? (
               <>
-                <span className="text-gray-600">Hello, {user?.name}</span>
-                <Link to="/profile" className="text-blue-500 hover:text-blue-700">Profile</Link>
+                <span className="text-muted-foreground">Hello, {user?.name}</span>
+                <Link to="/profile" className="text-primary hover:text-primary/80">Profile</Link>
                 {isAdmin && (
-                  <Link to="/admin" className="text-purple-500 hover:text-purple-700">Admin</Link>
+                  <Link to="/admin" className="text-primary hover:text-primary/80">Admin</Link>
                 )}
-                <Link to="/blogs/new" className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded">
-                  New Blog
-                </Link>
-                <button
-                  onClick={handleLogout}
-                  className="text-red-500 hover:text-red-700 bg-transparent border-none p-0"
-                >
+                <Button variant="default" className="h-9 px-3">
+                  <Link to="/blogs/new" className="text-primary-foreground">New Blog</Link>
+                </Button>
+                <Button variant="ghost" onClick={handleLogout}>
                   Logout
-                </button>
+                </Button>
               </>
             ) : (
               <>
-                <Link to="/login" className="text-blue-500 hover:text-blue-700">Login</Link>
-                <Link to="/register" className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded">
-                  Register
-                </Link>
+                <Link to="/login" className="text-primary hover:text-primary/80">Login</Link>
+                <Button variant="default" className="h-9 px-3">
+                  <Link to="/register" className="text-primary-foreground">Register</Link>
+                </Button>
               </>
             )}
           </div>
@@ -62,9 +60,9 @@ export default function DefaultLayout({ children }: DefaultLayoutProps) {
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-100">
+      <footer className="bg-background border-t">
         <div className="container mx-auto py-4 text-center">
-          <p className="text-gray-500">© 2025 Blog App. All rights reserved.</p>
+          <p className="text-muted-foreground">© 2025 Blog App. All rights reserved.</p>
         </div>
       </footer>
     </div>

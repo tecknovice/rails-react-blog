@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Blog } from '../api/blogs';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 interface BlogListProps {
   blogs: Blog[];
@@ -34,38 +36,38 @@ export default function BlogList({ blogs, isLoading, error }: BlogListProps) {
   }
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-6">
       {blogs.map((blog) => (
-        <div key={blog.id} className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-          <h2 className="text-xl font-bold mb-2">
-            <Link to={`/blogs/${blog.id}`} className="text-blue-500 hover:text-blue-700">
-              {blog.title}
-            </Link>
-          </h2>
-          
-          <div className="flex text-sm text-gray-500 mb-4">
-            <span>By {blog.user?.name}</span>
-            <span className="mx-2">•</span>
-            <span>
-              {blog.published_at
-                ? new Date(blog.published_at).toLocaleDateString()
-                : 'Draft'}
-            </span>
-          </div>
-          
-          <p className="text-gray-700 mb-4">
+        <Card key={blog.id}>
+          <CardHeader>
+            <CardTitle>
+              <Link to={`/blogs/${blog.id}`} className="text-blue-500 hover:text-blue-700">
+                {blog.title}
+              </Link>
+            </CardTitle>
+            <CardDescription>
+              <span>By {blog.user?.name}</span>
+              <span className="mx-2">•</span>
+              <span>
+                {blog.published_at
+                  ? new Date(blog.published_at).toLocaleDateString()
+                  : 'Draft'}
+              </span>
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="text-gray-700">
             {blog.content.length > 200
               ? `${blog.content.substring(0, 200)}...`
               : blog.content}
-          </p>
-          
-          <Link
-            to={`/blogs/${blog.id}`}
-            className="text-blue-500 hover:text-blue-700 inline-flex items-center"
-          >
-            Read more <span className="ml-1">→</span>
-          </Link>
-        </div>
+          </CardContent>
+          <CardFooter>
+            <Button variant="link">
+              <Link to={`/blogs/${blog.id}`} className="flex items-center">
+                Read more <span className="ml-1">→</span>
+              </Link>
+            </Button>
+          </CardFooter>
+        </Card>
       ))}
     </div>
   );

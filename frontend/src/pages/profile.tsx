@@ -1,8 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getProfile, updateProfile, Profile } from '../api/profile';
+import { getProfile, updateProfile } from '../api/profile';
 import { useAuth } from '../contexts/AuthContext';
 import DefaultLayout from '../layouts/DefaultLayout';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
 
 export default function ProfilePage() {
   const { user } = useAuth();
@@ -67,7 +71,9 @@ export default function ProfilePage() {
     return (
       <DefaultLayout>
         <div className="max-w-2xl mx-auto">
-          <p className="text-center text-gray-500">Loading profile...</p>
+          <div className="flex items-center justify-center p-8 min-h-[200px]">
+            <p className="text-muted-foreground">Loading profile...</p>
+          </div>
         </div>
       </DefaultLayout>
     );
@@ -90,60 +96,61 @@ export default function ProfilePage() {
           </div>
         )}
         
-        <div className="mb-6">
-          <h2 className="text-xl font-bold mb-2">
-            {user?.name}
-          </h2>
-          <p className="text-gray-600">{user?.email}</p>
-        </div>
-        
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block font-medium mb-1" htmlFor="bio">Bio</label>
-            <textarea
-              id="bio"
-              name="bio"
-              className="w-full p-2 border border-gray-300 rounded"
-              rows={5}
-              value={formData.bio}
-              onChange={handleChange}
-            />
-          </div>
-          
-          <div className="mb-4">
-            <label className="block font-medium mb-1" htmlFor="website">Website</label>
-            <input
-              type="text"
-              id="website"
-              name="website"
-              className="w-full p-2 border border-gray-300 rounded"
-              placeholder="https://example.com"
-              value={formData.website}
-              onChange={handleChange}
-            />
-          </div>
-          
-          <div className="mb-6">
-            <label className="block font-medium mb-1" htmlFor="location">Location</label>
-            <input
-              type="text"
-              id="location"
-              name="location"
-              className="w-full p-2 border border-gray-300 rounded"
-              placeholder="City, Country"
-              value={formData.location}
-              onChange={handleChange}
-            />
-          </div>
-          
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
-            disabled={updateProfileMutation.isPending}
-          >
-            {updateProfileMutation.isPending ? 'Saving...' : 'Save Profile'}
-          </button>
-        </form>
+        <Card>
+          <CardHeader>
+            <CardTitle>{user?.name}</CardTitle>
+            <CardDescription>{user?.email}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit}>
+              <div className="grid gap-6">
+                <div className="grid gap-2">
+                  <label className="text-sm font-medium" htmlFor="bio">Bio</label>
+                  <Textarea
+                    id="bio"
+                    name="bio"
+                    rows={5}
+                    value={formData.bio}
+                    onChange={handleChange}
+                    placeholder="Tell us about yourself"
+                  />
+                </div>
+                
+                <div className="grid gap-2">
+                  <label className="text-sm font-medium" htmlFor="website">Website</label>
+                  <Input
+                    type="text"
+                    id="website"
+                    name="website"
+                    placeholder="https://example.com"
+                    value={formData.website}
+                    onChange={handleChange}
+                  />
+                </div>
+                
+                <div className="grid gap-2">
+                  <label className="text-sm font-medium" htmlFor="location">Location</label>
+                  <Input
+                    type="text"
+                    id="location"
+                    name="location"
+                    placeholder="City, Country"
+                    value={formData.location}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+              
+              <Button
+                type="submit"
+                className="mt-6"
+                disabled={updateProfileMutation.isPending}
+              >
+                {updateProfileMutation.isPending ? 'Saving...' : 'Save Profile'}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
       </div>
     </DefaultLayout>
   );

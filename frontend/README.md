@@ -1,54 +1,134 @@
-# React + TypeScript + Vite
+# Rails React Blog - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive frontend for the Blog Application built with React, Vite, TypeScript, and Tailwind CSS.
 
-Currently, two official plugins are available:
+## Technologies
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React 19
+- TypeScript
+- Vite
+- Tailwind CSS 4
+- Shadcn UI
+- React Router
+- React Query (TanStack Query)
+- Axios
 
-## Expanding the ESLint configuration
+## Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Node.js 18+
+- npm 9+
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Setup
+
+1. Clone the repository
+
+```bash
+git clone <repository-url>
+cd rails-react-blog/frontend
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Install dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+npm install
 ```
+
+3. Start the development server
+
+```bash
+npm run dev
+```
+
+The development server will start at `http://localhost:5173`.
+
+## Build for Production
+
+```bash
+npm run build
+```
+
+The build artifacts will be stored in the `dist/` directory.
+
+## Project Structure
+
+```
+frontend/
+├── public/             # Static files
+├── src/
+│   ├── api/            # API client and endpoints
+│   │   ├── ui/         # Shadcn UI components
+│   ├── contexts/       # React contexts (Auth, etc.)
+│   ├── hooks/          # Custom React hooks
+│   ├── layouts/        # Layout components
+│   ├── lib/            # Utility functions
+│   ├── pages/          # Page components
+│   ├── App.tsx         # Main App component
+│   ├── index.css       # Global styles
+│   └── main.tsx        # Entry point
+├── index.html          # HTML template
+├── vite.config.ts      # Vite configuration
+├── tailwind.config.cjs # Tailwind CSS configuration
+├── tsconfig.json       # TypeScript configuration
+└── package.json        # Dependencies and scripts
+```
+
+## Features
+
+- **Authentication**: JWT-based authentication with login, register, and profile management
+- **Blog Management**: Create, read, update, and delete blog posts
+- **Responsive Design**: Works on all screen sizes
+- **Dark Mode**: Support for light and dark themes
+- **API Integration**: Seamless integration with the Rails backend
+- **Data Caching**: Efficient data fetching and caching with React Query
+
+## UI Components
+
+The application uses custom UI components built with Tailwind CSS and Shadcn UI:
+
+- Buttons
+- Cards
+- Inputs
+- Textareas
+- Navigation
+- Layout components
+
+## API Integration
+
+The frontend communicates with the Rails backend using Axios. All API-related code is in the `src/api` directory:
+
+- `axios.ts`: Axios configuration with interceptors for JWT handling
+- `auth.ts`: Authentication endpoints
+- `blogs.ts`: Blog-related endpoints
+- `profile.ts`: Profile-related endpoints
+
+## State Management
+
+- React Query for server state
+- React Context for application state (authentication)
+- Local component state for UI state
+
+## Routes
+
+| Path             | Component          | Description               | Auth Required |
+|------------------|---------------------|---------------------------|---------------|
+| `/`              | HomePage            | Home page with blog list   | No            |
+| `/login`         | LoginPage           | User login                | No            |
+| `/register`      | RegisterPage        | User registration         | No            |
+| `/blogs/:id`     | BlogDetailPage      | Blog detail view          | No            |
+| `/blogs/new`     | NewBlogPage         | Create new blog           | Yes           |
+| `/profile`       | ProfilePage         | User profile management   | Yes           |
+| `/admin`         | AdminDashboardPage  | Admin dashboard           | Admin only    |
+| `/admin/users`   | AdminUsersPage      | User management           | Admin only    |
+| `/admin/blogs`   | AdminBlogsPage      | Blog management           | Admin only    |
+
+## Environment Variables
+
+Create a `.env.local` file in the root directory with the following variables:
+
+```
+VITE_API_BASE_URL=http://localhost:3000/api
+```
+
+## License
+
+MIT
